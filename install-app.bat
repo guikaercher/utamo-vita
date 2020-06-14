@@ -5,5 +5,5 @@ REM start chrome %urlJava%
 REM start chrome %urlNode%
 REM start firefox.exe %url%
 REM start microsoft-edge:%url%
-
+echo UTAMO_VITA_KEY=F1 > .env
 npm i

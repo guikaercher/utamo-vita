@@ -15,6 +15,7 @@ const {
 const commandQueue = []
 
   const getCommand = () => {
+      console.log(commandQueue)
     if (commandQueue.length === 0) return null
     const command = commandQueue.pop()
     console.log(`command: ${command}`);
@@ -24,7 +25,9 @@ const commandQueue = []
   const keyPressed = (key) => {
       switch (key[0]) {
         case UTAMO_VITA_KEY:
-            commandQueue.push('utamo vita')
+            const command = 'utamo vita'
+            const lastCommand = commandQueue[commandQueue.length - 1]
+            if (command !== lastCommand) commandQueue.push(command)
             break
         default:
             break
@@ -39,7 +42,7 @@ const commandQueue = []
 
 gkm.events.on('key.*', function(key) {
     // Will only trigger on release
-    if (this.event === 'key.released') {
+    if (this.event === 'key.pressed') {
         keyPressed(key)
     }
 });

@@ -1,26 +1,33 @@
 const url = 'http://localhost:3000'
 const socket = io(url)
-const utamoVitaAudio = document.getElementById("myAudio");
+const utamoVitaAudio = document.getElementById("audio_utamo_vita");
+const startAudio = document.getElementById("audio_start");
 const UTAMO_VITA_FULL_TIME = 200 // seconds
 let POOLING_INTERVAL = 500
 
 let utamoVitaCountdown = UTAMO_VITA_FULL_TIME
 let refreshId = null
 
-
-
-const utamoVita = () => {
+const updateLabelAndBar = (utamoVitaCountdown) => {
     const utamoVitaCountDownBar = document.getElementById("utamo_vita")
     const utamoLabel = document.getElementById("utamo_label")
+    utamoLabel.innerHTML = `Next utamo in ${utamoVitaCountdown}s`
     utamoVitaCountDownBar.value = utamoVitaCountdown
-    utamoLabel.innerHTML =     `Next utamo in ${utamoVitaCountdown}s`
+}
+
+const utamoVita = () => {
     if (utamoVitaCountdown < 5) {
         utamoVitaAudio.play()
-        utamoVitaCountdown = UTAMO_VITA_FULL_TIME
+        refreshCounter()
         return true
     }
+    updateLabelAndBar(utamoVitaCountdown)
     utamoVitaCountdown--
 }
+
+const clearExactTimeout = function(timeout) {
+	clearInterval(timeout);
+};
 
 const utamoVitaCountDown = () => {
     refreshCounter()
@@ -32,12 +39,13 @@ const utamoVitaCountDown = () => {
 }
 
 const refreshCounter = () => {
-    clearInterval(refreshId)
     utamoVitaCountdown = UTAMO_VITA_FULL_TIME
+    clearInterval(refreshId)
+    updateLabelAndBar(utamoVitaCountdown)
 }
 
 socket.on('reminder', (data) => {
-    if (!data) POOLING_INTERVAL = 1000
+    if (!data) return POOLING_INTERVAL = 1000
     else POOLING_INTERVAL = 100
     console.log(data)
     switch(data) {
@@ -67,7 +75,7 @@ window.onbeforeunload = function(){
   };
 
 const startApp = () => {
-    utamoVitaAudio.play()
+    startAudio.play()
     document.getElementById("start").style.visibility = 'hidden';
     document.getElementById("utamo_label").style.visibility = 'visible';
     document.getElementById("utamo_vita").style.visibility = 'visible';
