@@ -1,7 +1,7 @@
 # utamo-vita
 
 ## What is it?
-A simple project I made in an afternoon to help my friends remember to use a spell in a game called Tibia
+A simple project I made in an afternoon to help my friends remember to use a spell in a game called Tibia, because they were always forgetting and this would cause their characters to die.
 
 ## How to run
 
