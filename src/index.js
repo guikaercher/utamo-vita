@@ -1,3 +1,4 @@
+require('dotenv').config()
 const gkm = require('gkm');
 const app = require('express')();
 const server = require('http').Server(app);
@@ -7,17 +8,27 @@ server.listen(port, () => {
   console.log(`listening at: ${port}`);
 })
 
+const {
+    UTAMO_VITA_KEY
+} = process.env
+
 const commandQueue = []
 
   const getCommand = () => {
-      console.log(commandQueue)
-    if (commandQueue.length === 0) return ''
+    if (commandQueue.length === 0) return null
     const command = commandQueue.pop()
+    console.log(`command: ${command}`);
     return command
   }
 
   const keyPressed = (key) => {
-      if (key[0] === 'F1') commandQueue.push('utamo vita')
+      switch (key[0]) {
+        case UTAMO_VITA_KEY:
+            commandQueue.push('utamo vita')
+            break
+        default:
+            break
+      }
   }
 
   const check = (data, socket) => {
@@ -27,7 +38,8 @@ const commandQueue = []
 
 
 gkm.events.on('key.*', function(key) {
-    if (this.event === 'key.pressed') {
+    // Will only trigger on release
+    if (this.event === 'key.released') {
         keyPressed(key)
     }
 });

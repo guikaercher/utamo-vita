@@ -2,8 +2,10 @@ const url = 'http://localhost:3000'
 const socket = io(url)
 const utamoVitaAudio = document.getElementById("myAudio");
 const UTAMO_VITA_FULL_TIME = 200 // seconds
+let POOLING_INTERVAL = 500
 
 let utamoVitaCountdown = UTAMO_VITA_FULL_TIME
+let refreshId = null
 
 
 
@@ -21,15 +23,22 @@ const utamoVita = () => {
 }
 
 const utamoVitaCountDown = () => {
-    const refreshId = setInterval(() => {
+    refreshCounter()
+    refreshId = setInterval(() => {
         console.log(`Next utamo vita in ${utamoVitaCountdown}`);
         const utamovitaResult = utamoVita()
-        if (utamovitaResult === true) clearInterval(refreshId)
+        if (utamovitaResult === true) refreshCounter()
     }, 1000);
 }
 
+const refreshCounter = () => {
+    clearInterval(refreshId)
+    utamoVitaCountdown = UTAMO_VITA_FULL_TIME
+}
 
 socket.on('reminder', (data) => {
+    if (!data) POOLING_INTERVAL = 1000
+    else POOLING_INTERVAL = 100
     console.log(data)
     switch(data) {
         case 'utamo vita':
@@ -44,19 +53,23 @@ socket.on('reminder', (data) => {
 const keepPoolingMessages = () => {
     setInterval(() => {
         socket.emit('check-status', 'front-loaded');
-    }, 500);
+    }, POOLING_INTERVAL);
 }
 
 window.onload = () => {
     console.log('window loaded');
-    keepPoolingMessages()
+    document.getElementById("utamo_label").style.visibility = 'hidden';
+    document.getElementById("utamo_vita").style.visibility = 'hidden';
 }
 
 window.onbeforeunload = function(){
     return 'Are you sure you want to leave?';
   };
 
-const enableAudio = () => {
+const startApp = () => {
     utamoVitaAudio.play()
     document.getElementById("start").style.visibility = 'hidden';
+    document.getElementById("utamo_label").style.visibility = 'visible';
+    document.getElementById("utamo_vita").style.visibility = 'visible';
+    keepPoolingMessages()
 }
