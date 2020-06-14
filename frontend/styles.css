@@ -1,0 +1,10 @@
+.center {
+    display: table;
+    margin: 0 auto;
+  }
+
+
+.big-button {
+    width: 500%;
+    height: 500%;
+  }

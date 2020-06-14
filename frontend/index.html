@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <audio id="myAudio">
+      <source src="./sounds/utamo_vita.mp3" type="audio/mp3">
+      Your browser does not support the audio element.
+    </audio>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.dev.js"></script>
+    <script src="index.js"></script>
+  </head>
+<body>
+<br>
+<div class="center">
+  <label id="utamo_label" for="utamo_vita">Next utamo in: 200s</label>
+  <br>
+<progress id="utamo_vita" value="200" max="200">Utamo vita</progress>
+</div>
+<div class="center">
+  <button id="start" class="big-button" onclick="enableAudio()" type="button">
+    Start
+</button>
+</div>
+</body>
+<footer>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="styles.css">
+</footer>
+</html>
