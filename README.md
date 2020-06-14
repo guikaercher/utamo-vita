@@ -10,3 +10,7 @@ https://nodejs.org/dist/v12.18.0/node-v12.18.0-x64.msi
 
 Run app
 double click start-app.bat
+
+
+Reference:
+https://lingojam.com/RobotVoiceGenerator

@@ -1,5 +1,5 @@
-start npm run start-front
-start npm run start
+start /min npm run start-front
+start /min npm run start
 
 set url="http://127.0.0.1:8080/"
 REM start iexplore.exe %url%
